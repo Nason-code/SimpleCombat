@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://2dubrttu2gii"]
+
+[ext_resource type="PackedScene" uid="uid://cpg8g6a10xdtq" path="res://scenes/entity.tscn" id="1_5jbmu"]
+[ext_resource type="Script" uid="uid://4a5rbghyjpr7" path="res://scripts/weapon.gd" id="2_oy6s4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_igkkn"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_goi68"]
+albedo_color = Color(0.256797, 0.410465, 0.86024, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_nn2rr"]
+material = SubResource("StandardMaterial3D_goi68")
+
+[node name="CombatTest" type="Node3D"]
+
+[node name="Weapon" type="Node3D" parent="."]
+script = ExtResource("2_oy6s4")
+
+[node name="Area3D" type="Area3D" parent="Weapon"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Weapon/Area3D"]
+shape = SubResource("BoxShape3D_igkkn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Weapon"]
+mesh = SubResource("BoxMesh_nn2rr")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 5, 0)
+
+[node name="Entities" type="Node3D" parent="."]
+
+[node name="Fen Stalker" parent="Entities" instance=ExtResource("1_5jbmu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
+
+[node name="Trork" parent="Entities" instance=ExtResource("1_5jbmu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -3)
+
+[connection signal="area_entered" from="Weapon/Area3D" to="Weapon" method="_on_area_3d_area_entered"]
